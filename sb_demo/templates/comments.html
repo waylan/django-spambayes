@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>Spambayes Filtered Comments</title>
+  </head>
+  <body>
+    <h1>Spambayes Filtered Comments</h1>
+      <p>
+        This is an experiment to determine the feasability of using the email 
+        spam filter <a href="http://spambayes.sourceforge.net/">SpamBayes</a> 
+        for filtering blog comments, wiki pages, and the like. Below are all 
+        comments that have ever been made to this page (anonymous or not). 
+        Occasionaly, I will go through and mark each comment as either "spam" 
+        or "ham". The hope is that eventially, with enough training, the 
+        SpamBayes filter will be able to acurately score and mark any new 
+        comments correctly.
+      </p>
+                                                                  
+      <p>
+        You can <b>help by spreading the word</b>! Link to this page anywhere 
+        you can (without spamming, of course). The idea is to get the page url 
+        out there and attrach the attention of spamming bots. Lets see how it 
+        holds up. Oh, you can also help by adding your own non-spammy comments.
+      </p>
+       
+      <p>
+        Thanks for looking,<br />
+        <a href="http://achinghead.com">Waylan Limberg</a><br />
+        waylan __at__ gmail __dot__ com
+      </p>
+
+    <h2>Add your Comment:</h2>
+      <form action="/sb_demo/add/" method="post">
+        <div><label>Name: <input type="text" name="name"></label></div>
+        <div><label>Email: <input type="text" name="email"></label> 
+            (not made public)</div>
+        <div><textarea name="body" rows="3" cols="60"></textarea></div>
+        <div><input type="submit" value="Submit Comment"></div>
+      </form>
+
+    <h2>Comments:</h2>
+    <hr />
+    <ol>
+      {% for comment in comments %}
+        <li>
+          <p>
+             Comment by {% if comment.author %}{{ comment.author }}
+             {% else %}an anonymous coward{% endif %}  
+             on {{ comment.date|date:"j M Y G:i:s T" }}.<br />  
+              
+             <span class="meta">
+             Score: {{ comment.score }} |
+             Marked: {{ comment.mark|capfirst }} |
+             Trained: {{ comment.trained_as|capfirst }}
+             </span>
+          </p>
+            
+          {% if is_staff and not comment.is_trained %}
+          <form action="/sb_demo/train/" method="post">
+            <p>
+              Train as
+              <input type="radio" name="mark" value="ham">Ham
+              <input type="radio" name="mark" value="spam">Spam
+              <input type="hidden" name="comment_id" value="{{ comment.id }}">
+              <input type="submit" value="Go&gt;">
+            </p>
+          {% endif %}
+           <blockquote>
+            {{ comment.body|escape|linebreaks }}
+          </blockquote>
+        </li>
+      {% endfor %}
+    </ol>
+  </body>
+</html>
