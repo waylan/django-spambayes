@@ -1,7 +1,7 @@
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from sb_demo.models import Comment
-import djangobayes
+from djangobayes.filter import filter
 
 def index(request):
     """ Display all comments to date. """
@@ -21,7 +21,7 @@ def add_comment(request):
     """ Add and score a Comment. """
     if request.method == "POST":
         try:
-            score = djangobayes.filter.score(request.POST['body'])
+            score = filter.score(request.POST['body'])
         except: # ZeroDivisionError, AssertionError:
             score = None
             mark = 'unsure'
@@ -42,8 +42,8 @@ def train(request):
         if request.POST['mark'] == 'ham':
             is_spam = False
         comment = Comment.objects.get(pk=request.POST['comment_id'])
-        djangobayes.filter.train(comment.body, is_spam)
-        djangobayes.filter.store()
+        filter.train(comment.body, is_spam)
+        filter.store()
         comment.trained_as = request.POST['mark']
         comment.save()
     return HttpResponseRedirect('/sb_demo/')

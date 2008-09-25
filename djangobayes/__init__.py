@@ -1,14 +1,9 @@
-try:
-    from djangobayes.models import Bayes
-except:
-    # FIXME: this doesn't catch the error on syncdb. I had to comment out 
-    # all lines for syncdb to work.
+"""
+djangobayes
+===========
 
-    # DB not yet synced??
-    pass
-else:
-    from djangobayes.util import DjangoClassifier
-    from spambayes.hammie import Hammie
+A Django utility app that inferfaces with SpamBayes to provide an 
+anti-spam filter. Distrubuted as part of [Django-SpamBayes][]
 
-    db = DjangoClassifier(Bayes)
-    filter = Hammie(db)
+[DJango-SpamBayes]: http://code.google.com/p/django-spambayes/
+"""
