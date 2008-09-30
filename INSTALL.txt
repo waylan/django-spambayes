@@ -1,0 +1,44 @@
+Installation
+============
+
+Dependencies
+------------
+
+Django-SpamBayes requires the core SpamBayes package. This does not include
+any of the specialized e-mail client plugins. It is recommended that you
+download and install a recent "source release" of SpamBayes.
+
+    wget http://voxel.dl.sourceforge.net/sourceforge/spambayes/spambayes-1.1a4.tar.gz
+    tar zxvf spambayes-1.1a4.tar.gz
+    cd spambayes-1.1a4
+    python setup.py install
+
+
+
+There are three ways to install Django-SpamBayes:
+
+Easy Install
+------------
+
+From the command line as a root user do:
+
+    easy_install django-spambayes
+
+Source Install
+--------------
+
+From the command line as a root user do:
+
+    wget http://django-spambayes.googlecode.com/files/django-spambayes-0.1.tar.gz
+    tar zxvf django-spambayes-0.1.tar.gz
+    cd django-spambayes-0.1
+    python setup.py install
+
+Subversion Checkout
+-------------------
+
+From a directory on your `PYTHONPATH` do:
+
+    svn co http://django-spambayes.googlecode.com/svn/trunk/
+
+

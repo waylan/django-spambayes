@@ -1,0 +1,47 @@
+CommentBayes
+============
+
+CommentBayes is an add-on to Django's default [Comments][] app 
+(``django.contrib.comments``) and adds SpamBayes filtering. CommentBayes
+simply uses signals to add scoring and training to Comments' moderation.
+
+Setup:
+------
+
+First, install ``commentbayes.py`` on your ``PYTHONPATH``. See ``INSTALL.txt``
+for help with installation.
+
+If you haven't already, setup the DjangoBayes app which CommentBayes
+depends upon. See ``docs/djangobayes.txt`` for specifics. Be sure
+``django.contrib.comments`` is installed as well.
+
+Add ``commentbayes`` to ``INSTALLED_APPS`` in your ``settings.py`` file.
+
+CommentBayes supports two optional settings to indicate the ham and spam 
+thresholds. Each should be a floating point number between 0 and 1:
+
+* `HAM_LEVEL` (default is `0.3`)
+* `SPAM_LEVEL` (default is `0.8`)
+
+In the event that either is not set, that setting will fall back to the default.
+
+Usage:
+------
+
+All future comments will automaticly be run through the SpamBayes filter. 
+Any comment with a score greater than `SPAM_LEVEL` will be marked for 
+deletion (``comment.is_removed = True``), any comment with a score equal 
+to or between ``HAM_LEVEL`` and ``SPAM_LEVEL`` will be marked for 
+moderation (``comment.is_public = False``), and any comment with a score 
+less than ``HAM_LEVEL`` will be marked as ham.
+
+To train SpamBayes, point your browser at ``/comments/moderate/`` (an 
+undocumented part of ``django.contrib.comments``) and either 'approve' 
+or 'remove' the comments awaiting moderation. In a short time and with 
+good training, you will be enjoying spam-free comments!
+
+You may want to set up a cron job to remove comments marked for deletion 
+(``comment.is_removed = True``) on occasion.
+
+[Comments]: http://docs.djangoproject.com/en/dev/ref/contrib/comments/
+
