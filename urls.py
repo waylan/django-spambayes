@@ -10,4 +10,5 @@ urlpatterns = patterns('',
     # Uncomment this for admin:
     (r'^admin/(.*)', admin.site.root),
     (r'^sb_demo/', include('sb_demo.urls')),
+    (r'^comments/', include('django.contrib.comments.urls')),
 )

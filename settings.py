@@ -62,9 +62,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
-ROOT_URLCONF = 'django_spambayes.urls'
+ROOT_URLCONF = 'django-spambayes.urls'
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -80,4 +81,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'djangobayes',
     'sb_demo',
+    'django.contrib.flatpages',
+    'django.contrib.comments',
+    'commentbayes',
 )
