@@ -40,4 +40,5 @@ INSTALLED_APPS = (
     'djangobayes',
     'commentbayes',
     'sb_demo',
+    'statusbayes',
 )
